@@ -1,5 +1,10 @@
 # Distracted Driver Detection using Deep Learning
 
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
+![Jupyter Notebook](https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
+
 An end-to-end computer vision project to classify distracted driving behaviors using transfer learning with EfficientNetB3. This repository contains a comprehensive Jupyter Notebook that covers the entire machine learning pipeline—from data preprocessing and augmentation to model training and evaluation—achieving approximately 89% validation accuracy.
 
 ---
