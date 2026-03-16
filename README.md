@@ -118,6 +118,8 @@ The dataset originates from the public Kaggle competition: State Farm Distracted
 - c8: Hair and makeup
 - c9: Talking to passenger
 
+![Sample Distracted Driving Images](sample_images.png)
+
 ---
 
 ## Results
@@ -127,6 +129,16 @@ Extensive evaluation on the strictly driver-separated validation set yielded the
 - **Validation Accuracy**: Approximately 89%
 - **Robust Generalization**: Maintained strong precision and recall across all 10 classes.
 - **Metrics Provided**: The notebook outputs detailed confusion matrices, classification reports, per-class accuracy bar charts, and One-vs-All ROC curves with calculated AUC values.
+
+### Confusion Matrix
+The confusion matrix below demonstrates the model's high precision in separating subtle actions, such as 'Texting - right' vs 'Talking on phone - right'.
+
+![Confusion Matrix](confusion_matrix.png)
+
+### Driver Risk Scores
+The custom evaluation mechanism seamlessly allocates a safety risk score reflecting the frequency of detected distracted behaviors.
+
+![Driver Risk Scores](risk_scores.png)
 
 ---
 
