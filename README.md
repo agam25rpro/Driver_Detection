@@ -141,6 +141,8 @@ The confusion matrix below demonstrates the model's high precision in separating
 ### ROC Curves
 The One-vs-All Receiver Operating Characteristic (ROC) curves illustrate the strong diagnostic ability of the EfficientNetB3 classifier across all 10 distracted driving classes, achieving high AUC scores.
 
+![ROC Curves](roc_curves.png)
+
 ---
 
 ## Technologies Used
