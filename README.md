@@ -118,7 +118,10 @@ The dataset originates from the public Kaggle competition: State Farm Distracted
 - c8: Hair and makeup
 - c9: Talking to passenger
 
-![Sample Distracted Driving Images](sample_images.png)
+### Class Distribution
+Here is the distribution of the different distracted driving offenses across the training dataset:
+
+![Class Distribution](class_pie.png)
 
 ---
 
@@ -135,10 +138,10 @@ The confusion matrix below demonstrates the model's high precision in separating
 
 ![Confusion Matrix](confusion_matrix.png)
 
-### Driver Risk Scores
-The custom evaluation mechanism seamlessly allocates a safety risk score reflecting the frequency of detected distracted behaviors.
+### ROC Curves
+The One-vs-All Receiver Operating Characteristic (ROC) curves illustrate the strong diagnostic ability of the EfficientNetB3 classifier across all 10 distracted driving classes, achieving high AUC scores.
 
-![Driver Risk Scores](risk_scores.png)
+![ROC Curves](roc_curves.png)
 
 ---
 
