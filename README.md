@@ -2,15 +2,25 @@
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-%23FF6F00.svg?style=for-the-badge&logo=TensorFlow&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
 ![Jupyter Notebook](https://img.shields.io/badge/jupyter-%23FA0F00.svg?style=for-the-badge&logo=jupyter&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
 
-An end-to-end computer vision project to classify distracted driving behaviors using transfer learning with EfficientNetB3. This repository contains a comprehensive Jupyter Notebook that covers the entire machine learning pipeline—from data preprocessing and augmentation to model training and evaluation—achieving approximately 89% validation accuracy.
+An end-to-end computer vision project to classify distracted driving behaviors using transfer learning with EfficientNetB3. This repository contains a comprehensive Jupyter Notebook that covers the entire machine learning pipeline—from data preprocessing and augmentation to model training and evaluation—achieving approximately 89% validation accuracy. A FastAPI-based interactive demo is also included and can be self-hosted.
+
+---
+
+## Live Demo
+
+An interactive web demo is included in this repository. It serves the trained EfficientNetB3 model over a FastAPI backend and provides a browser UI for classifying sample dashboard images.
+
+> **Note:** The demo requires the trained model weights (`best_model.h5`, ~124 MB) which are not stored in this repo due to GitHub's file size limits. See [Deploy to Render](#deploy-to-render) for hosting instructions.
 
 ---
 
 ## Table of Contents
 
+- [Live Demo](#live-demo)
 - [Overview](#overview)
 - [Project Architecture](#project-architecture)
 - [Model Architecture & Methodology](#model-architecture--methodology)
@@ -25,6 +35,9 @@ An end-to-end computer vision project to classify distracted driving behaviors u
 - [Results](#results)
 - [Technologies Used](#technologies-used)
 - [How to Run](#how-to-run)
+  - [Run Notebook](#run-notebook)
+  - [Run Demo Locally](#run-demo-locally)
+  - [Deploy to Render](#deploy-to-render)
 - [Repository Structure](#repository-structure)
 
 ---
@@ -153,10 +166,10 @@ The One-vs-All Receiver Operating Characteristic (ROC) curves illustrate the str
 ## Technologies Used
 
 - **Language**: Python 3
-- **Core Framework**: TensorFlow / Keras (Deep Learning, Transfer Learning, Image Generators)
+- **ML Framework**: TensorFlow / Keras (Transfer Learning, ImageDataGenerator)
+- **Demo Backend**: FastAPI, Uvicorn, Pillow
 - **Data Manipulation**: Pandas, NumPy
-- **Machine Learning Utilities**: Scikit-Learn
-- **Image Processing**: OpenCV, PIL
+- **ML Utilities**: Scikit-Learn
 - **Visualization**: Matplotlib, Seaborn
 - **Environment**: Jupyter Notebook
 
@@ -164,33 +177,102 @@ The One-vs-All Receiver Operating Characteristic (ROC) curves illustrate the str
 
 ## How to Run
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/agam25rpro/Driver_Detection.git
-    cd Driver_Detection
-    ```
+### Run Notebook
 
-2.  **Install the required libraries:**
-    ```bash
-    pip install tensorflow pandas numpy scikit-learn opencv-python matplotlib seaborn tqdm pillow
-    ```
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/agam25rpro/Driver_Detection.git
+   cd Driver_Detection
+   ```
 
-3.  **Download the dataset:**
-    - Download the data from the Kaggle State Farm Distracted Driver Detection competition.
-    - Unzip and structure the folders such that the `imgs/train`, `imgs/test`, and `driver_imgs_list.csv` exist. Update the absolute paths in the notebook as necessary for your local file system.
+2. **Install notebook dependencies:**
+   ```bash
+   pip install tensorflow pandas numpy scikit-learn opencv-python matplotlib seaborn tqdm pillow
+   ```
 
-4.  **Launch Jupyter Notebook:**
-    ```bash
-    jupyter notebook
-    ```
-    Open `Distracted_driver_detection_nb.ipynb` and execute the cells sequentially.
+3. **Download the dataset** from the [Kaggle State Farm Distracted Driver Detection](https://www.kaggle.com/c/state-farm-distracted-driver-detection) competition. Update the paths in the notebook to match your local filesystem.
+
+4. **Launch Jupyter Notebook:**
+   ```bash
+   jupyter notebook
+   ```
+   Open `Distracted_driver_detection_nb.ipynb` and run cells sequentially.
+
+---
+
+### Run Demo Locally
+
+1. Place your trained `best_model.h5` in the `Backend/` directory.
+
+2. Install backend dependencies:
+   ```bash
+   pip install -r Backend/requirements.txt
+   ```
+
+3. Start the server:
+   ```bash
+   cd Backend
+   uvicorn main:app --reload
+   ```
+
+4. Open **`http://localhost:8000`** in your browser.
+
+---
+
+### Deploy to Render
+
+1. **Push the repo to GitHub** (if not already done):
+   ```bash
+   git add .
+   git commit -m "Add FastAPI demo"
+   git push
+   ```
+
+2. **Host the model externally.** Because `best_model.h5` (~124 MB) exceeds GitHub's file limit, upload it somewhere publicly accessible (e.g. [HuggingFace Hub](https://huggingface.co/), Google Drive direct link, or an S3 bucket).
+
+3. **Create a new Web Service on [Render](https://render.com)**:
+   - Connect your GitHub repo
+   - **Root Directory:** `Backend`
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
+   - Add an **Environment Variable**: `MODEL_URL` = *(your direct download link to best_model.h5)*
+
+4. **Add a startup download script.** In `Backend/main.py`, the `load()` startup event already handles missing model files gracefully; extend it to download from `MODEL_URL` if the file isn't present:
+   ```python
+   @app.on_event("startup")
+   async def load():
+       if not os.path.exists(MODEL_PATH):
+           url = os.getenv("MODEL_URL")
+           if url:
+               import urllib.request
+               print("Downloading model from MODEL_URL ...")
+               urllib.request.urlretrieve(url, MODEL_PATH)
+       # ... rest of load logic
+   ```
+
+5. Deploy. Render will install dependencies, download the model on first cold start, and serve the app.
+
+> Render free tier spins down after inactivity. The model download happens once per instance start (~30–60 s on first request).
 
 ---
 
 ## Repository Structure
 
 ```
-.
-└── Distracted_driver_detection_nb.ipynb   # Comprehensive notebook containing all code logic
-└── README.md                              # Project documentation
+Driver_Detection/
+├── Backend/
+│   ├── main.py              # FastAPI server — inference + static serving
+│   ├── requirements.txt     # Python dependencies for the demo
+│   └── sample_images/       # Sample dashboard images for the demo
+├── Frontend/
+│   ├── index.html           # Single-page demo UI
+│   ├── style.css
+│   └── app.js
+├── Distracted_driver_detection_nb.ipynb   # Full ML pipeline notebook
+├── confusion_matrix.png
+├── roc_curves.png
+├── class_pie.png
+└── README.md
 ```
+
+> `best_model.h5` is excluded from version control (see `.gitignore`). Supply it separately when running the demo.

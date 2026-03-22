@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Distracted Driver Detection — AI Demo</title>
+  <meta name="description" content="Live demo of an EfficientNetB3 deep learning model that detects distracted driving behaviors from dashboard camera images." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/frontend/style.css" />
+
+</head>
+<body>
+
+  <!-- ═══════════════════ NAVBAR ═══════════════════ -->
+  <nav class="navbar">
+    <div class="nav-brand">
+      <span class="nav-title">DriverAI</span>
+    </div>
+
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#demo">Live Demo</a>
+      <a href="#results">Results</a>
+      <a href="https://github.com/agam25rpro/Driver_Detection" target="_blank" class="nav-github">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHub
+      </a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════ HERO ═══════════════════ -->
+  <section class="hero" id="top">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Deep Learning · Computer Vision · CNN</div>
+      <h1 class="hero-title">Distracted Driver<br/><span class="gradient-text">Detection</span></h1>
+      <p class="hero-subtitle">
+        An end-to-end computer vision system that classifies 10 distracted driving behaviors
+        from dashboard camera images using transfer learning with <strong>EfficientNetB3</strong>.
+      </p>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-number">10</span>
+          <span class="stat-label">Behavior Classes</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">89%</span>
+          <span class="stat-label">Val Accuracy</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">26K+</span>
+          <span class="stat-label">Training Images</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">AUC ~1.0</span>
+          <span class="stat-label">ROC Score</span>
+        </div>
+      </div>
+      <div class="hero-cta">
+        <a href="#demo" class="btn-primary">Try Live Demo</a>
+        <a href="#how-it-works" class="btn-secondary">How It Works</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-float">
+        <div class="hero-card-inner">
+          <div class="mini-badge safe">✓ Safe Driving</div>
+          <div class="mini-bars">
+            <div class="mini-bar" style="width:88%;background:var(--green)"></div>
+            <div class="mini-bar" style="width:5%;background:var(--blue)"></div>
+            <div class="mini-bar" style="width:4%;background:var(--orange)"></div>
+            <div class="mini-bar" style="width:3%;background:var(--red)"></div>
+          </div>
+          <div class="mini-foot">Confidence: 88.3%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ OVERVIEW ═══════════════════ -->
+  <section class="section" id="overview">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">The Problem</span>
+        <h2>Why Distracted Driving Matters</h2>
+        <p>Distracted driving is one of the leading causes of road accidents worldwide. This project uses AI to automatically detect unsafe driver behavior in real time.</p>
+      </div>
+      <div class="overview-grid">
+        <div class="info-card">
+          <div class="info-icon info-icon--data"></div>
+
+          <h3>Dataset</h3>
+          <p>State Farm Distracted Driver Detection (Kaggle). Over 26,000 labeled dashboard camera images across 10 behavior categories from multiple real drivers.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon info-icon--model"></div>
+
+          <h3>Model</h3>
+          <p>EfficientNetB3 pre-trained on ImageNet as a feature backbone, with a custom classification head trained via a two-stage fine-tuning strategy.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon info-icon--shield"></div>
+
+          <h3>Generalization</h3>
+          <p>Training and validation sets are split at the <em>driver identity level</em> — the model is tested on entirely unseen individuals, ensuring real-world reliability.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon info-icon--chart"></div>
+
+          <h3>Risk Scoring</h3>
+          <p>Each class carries a severity weight. The model outputs both a behavior class and a quantitative risk score, enabling per-driver safety profiling.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ HOW IT WORKS ═══════════════════ -->
+  <section class="section section-dark" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Architecture</span>
+        <h2>How the Model Works</h2>
+        <p>A carefully designed pipeline from raw images to actionable safety classifications.</p>
+      </div>
+      <div class="pipeline">
+        <div class="pipe-step">
+          <div class="pipe-num">01</div>
+          <div class="pipe-body">
+            <h3>Data Ingestion</h3>
+            <p>Raw 640×480 dashboard images are loaded alongside CSV metadata. Each image is associated with a driver ID and behavior class.</p>
+          </div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-num">02</div>
+          <div class="pipe-body">
+            <h3>Driver-Level Split</h3>
+            <p>Instead of random splitting, the 80/20 train-validation split is done at the <strong>subject level</strong>. No driver's images appear in both sets — preventing data leakage.</p>
+          </div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-num">03</div>
+          <div class="pipe-body">
+            <h3>Augmentation</h3>
+            <p>Real-time augmentation via Keras ImageDataGenerator: ±15° rotation, 10% width/height shift, 10% zoom, horizontal flip. Images resized to <strong>300×300</strong>.</p>
+          </div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-num">04</div>
+          <div class="pipe-body">
+            <h3>EfficientNetB3 Backbone</h3>
+            <p>ImageNet pre-trained weights give the model strong low-level feature extraction (edges, textures). The backbone is frozen in Stage 1, then unfrozen in Stage 2.</p>
+          </div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-num">05</div>
+          <div class="pipe-body">
+            <h3>Custom Head</h3>
+            <p><strong>GlobalAveragePooling2D → Dropout(0.4) → Dense(10, softmax)</strong>. Dropout regularizes the model; softmax outputs a 10-class probability distribution.</p>
+          </div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-step">
+          <div class="pipe-num">06</div>
+          <div class="pipe-body">
+            <h3>Two-Stage Training</h3>
+            <p><strong>Stage 1</strong>: Head only, lr = 1e-3. <strong>Stage 2</strong>: Full network unfrozen, lr = 1e-5. EarlyStopping + ModelCheckpoint callbacks prevent over-fitting.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ LIVE DEMO ═══════════════════ -->
+  <section class="section" id="demo">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Interactive</span>
+        <h2>Live Classification Demo</h2>
+        <p>Pick a sample image from the dataset below, or upload your own. The model will classify the driver behavior in real time.</p>
+      </div>
+
+      <div class="demo-layout">
+        <!-- LEFT: image chooser -->
+        <div class="demo-left">
+          <div class="chooser-tabs">
+            <button class="tab active" id="tab-samples" onclick="switchTab('samples')">Sample Images</button>
+
+            <button class="tab" id="tab-upload" onclick="switchTab('upload')">Upload My Own</button>
+
+          </div>
+
+          <!-- Sample grid -->
+          <div id="panel-samples" class="panel">
+            <p class="panel-hint">These are real images from the State Farm dataset. Click any to select it.</p>
+            <div class="sample-grid" id="sampleGrid">
+              <div class="sample-loading">Loading samples…</div>
+            </div>
+          </div>
+
+          <!-- Upload panel -->
+          <div id="panel-upload" class="panel hidden">
+            <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+              <div class="dropzone-icon"></div>
+
+              <p>Click or drag &amp; drop a dashboard image here</p>
+              <span class="dropzone-hint">JPG, PNG up to 10MB</span>
+            </div>
+            <input type="file" id="fileInput" accept="image/*" hidden onchange="handleFileUpload(event)" />
+          </div>
+
+          <!-- Classify button -->
+          <button class="btn-classify" id="classifyBtn" onclick="runClassification()" disabled>
+            <span id="btnText">Select an image first</span>
+            <div class="btn-spinner hidden" id="btnSpinner"></div>
+          </button>
+        </div>
+
+        <!-- RIGHT: preview + results -->
+        <div class="demo-right">
+          <div class="preview-box" id="previewBox">
+            <div class="preview-placeholder" id="previewPlaceholder">
+              <div class="preview-icon"></div>
+
+              <p>Image preview will appear here</p>
+            </div>
+            <img id="previewImg" class="hidden" src="" alt="Selected image preview" />
+          </div>
+
+          <!-- Results -->
+          <div class="results-panel hidden" id="resultsPanel">
+            <div class="result-top">
+              <div class="result-badge" id="resultBadge"></div>
+              <div class="result-meta">
+                <div class="result-label" id="resultLabel"></div>
+                <div class="result-conf" id="resultConf"></div>
+                <div class="result-severity" id="resultSeverity"></div>
+              </div>
+            </div>
+            <div class="result-desc" id="resultDesc"></div>
+
+            <h4 class="bars-title">All Class Probabilities</h4>
+            <div class="class-bars" id="classBars"></div>
+            <div class="mock-warning hidden" id="mockWarning">
+              Warning: Running in mock mode — model not loaded. Start the backend with <code>uvicorn main:app --reload</code>.
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ RESULTS ═══════════════════ -->
+  <section class="section section-dark" id="results">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Evaluation</span>
+        <h2>Model Evaluation Results</h2>
+        <p>Validated on a strictly driver-separated holdout set of unseen individuals.</p>
+      </div>
+      <div class="results-grid">
+        <div class="chart-card">
+          <h3>Confusion Matrix</h3>
+          <p class="chart-desc">Strong diagonal performance across all 10 classes. The main confusion area is c9 (Talking to Passenger), which shares visual features with c0 (Safe Driving).</p>
+          <img src="http://localhost:8000/static/confusion_matrix.png" alt="Confusion Matrix" class="chart-img" onerror="this.src='../confusion_matrix.png'" />
+        </div>
+        <div class="chart-card">
+          <h3>ROC Curves (One-vs-All)</h3>
+          <p class="chart-desc">9 out of 10 classes achieve AUC = 1.00. Class c9 achieves AUC = 0.95, reflecting its slightly ambiguous visual signature.</p>
+          <img src="http://localhost:8000/static/roc_curves.png" alt="ROC Curves" class="chart-img" onerror="this.src='../roc_curves.png'" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ CLASSES ═══════════════════ -->
+  <section class="section" id="classes">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Dataset</span>
+        <h2>The 10 Distraction Classes</h2>
+        <p>Every behavior carries a severity score from 0 (safe) to 5 (most dangerous) based on cognitive and physical distraction level.</p>
+      </div>
+      <div class="classes-grid" id="classesGrid">
+        <!-- populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════ FOOTER ═══════════════════ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">DriverAI</div>
+
+      <div class="footer-text">Built with EfficientNetB3 · TensorFlow · FastAPI · Python</div>
+      <a href="https://github.com/agam25rpro/Driver_Detection" target="_blank" class="footer-gh">View on GitHub →</a>
+    </div>
+  </footer>
+
+  <script src="/frontend/app.js"></script>
+
+</body>
+</html>
