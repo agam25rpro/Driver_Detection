@@ -268,12 +268,14 @@
         <div class="chart-card">
           <h3>Confusion Matrix</h3>
           <p class="chart-desc">Strong diagonal performance across all 10 classes. The main confusion area is c9 (Talking to Passenger), which shares visual features with c0 (Safe Driving).</p>
-          <img src="http://localhost:8000/static/confusion_matrix.png" alt="Confusion Matrix" class="chart-img" onerror="this.src='../confusion_matrix.png'" />
+          <img src="/static/confusion_matrix.png" alt="Confusion Matrix" class="chart-img" />
+
         </div>
         <div class="chart-card">
           <h3>ROC Curves (One-vs-All)</h3>
           <p class="chart-desc">9 out of 10 classes achieve AUC = 1.00. Class c9 achieves AUC = 0.95, reflecting its slightly ambiguous visual signature.</p>
-          <img src="http://localhost:8000/static/roc_curves.png" alt="ROC Curves" class="chart-img" onerror="this.src='../roc_curves.png'" />
+          <img src="/static/roc_curves.png" alt="ROC Curves" class="chart-img" />
+
         </div>
       </div>
     </div>
