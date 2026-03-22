@@ -71,18 +71,39 @@ CLASS_KEYS = [c["id"] for c in CLASS_META]
 model = None
 model_loaded = False
 
+# Google Drive file ID for best_model.h5
+GDRIVE_FILE_ID = "1dZIv6js--wCLe3hvEyZrVmq_q3Tw5aB5"
+
 @app.on_event("startup")
 async def load():
     global model, model_loaded
+
+    # ── Step 1: download model if not already present ────────────────
+    if not os.path.exists(MODEL_PATH):
+        print("Model not found locally — downloading from Google Drive …")
+        try:
+            import gdown
+            gdown.download(
+                f"https://drive.google.com/uc?id={GDRIVE_FILE_ID}",
+                MODEL_PATH,
+                quiet=False,
+                fuzzy=True,
+            )
+            print("Download complete.")
+        except Exception as e:
+            print(f"Download failed: {e}")
+
+    # ── Step 2: load model (only if file exists after download attempt) ─
     if HAS_TF and os.path.exists(MODEL_PATH):
         try:
             print("Loading EfficientNetB3 model …")
             model = load_model(MODEL_PATH)
             model_loaded = True
-            print("Model ready ✓")
+            print("Model ready.")
         except Exception as e:
             print(f"Model load error: {e}")
     else:
+
         print("Model not found — running in mock mode.")
 
 # ─────────────────────────── helpers ─────────────────────────────
