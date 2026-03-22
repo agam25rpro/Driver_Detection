@@ -17,4 +17,4 @@ env/
 Thumbs.db
 
 # Test scripts
-Backend/test_all.py
+Backend/test_*.py

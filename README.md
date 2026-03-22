@@ -14,9 +14,8 @@ An end-to-end computer vision project to classify distracted driving behaviors u
 
 An interactive web demo is included in this repository. It serves the trained EfficientNetB3 model over a FastAPI backend and provides a browser UI for classifying sample dashboard images.
 
-> **Note:** The demo requires the trained model weights (`best_model.h5`, ~124 MB) which are not stored in this repo due to GitHub's file size limits. See [Deploy to Render](#deploy-to-render) for hosting instructions.
-
 ---
+
 
 ## Table of Contents
 
@@ -221,40 +220,19 @@ The One-vs-All Receiver Operating Characteristic (ROC) curves illustrate the str
 
 ### Deploy to Render
 
-1. **Push the repo to GitHub** (if not already done):
-   ```bash
-   git add .
-   git commit -m "Add FastAPI demo"
-   git push
-   ```
-
-2. **Host the model externally.** Because `best_model.h5` (~124 MB) exceeds GitHub's file limit, upload it somewhere publicly accessible (e.g. [HuggingFace Hub](https://huggingface.co/), Google Drive direct link, or an S3 bucket).
-
-3. **Create a new Web Service on [Render](https://render.com)**:
+1. **Create a new Web Service on [Render](https://render.com)**:
    - Connect your GitHub repo
    - **Root Directory:** `Backend`
    - **Build Command:** `pip install -r requirements.txt`
    - **Start Command:** `uvicorn main:app --host 0.0.0.0 --port $PORT`
-   - Add an **Environment Variable**: `MODEL_URL` = *(your direct download link to best_model.h5)*
+   - Add an **Environment Variable**: `MODEL_GDRIVE_ID` = `1dZIv6js--wCLe3hvEyZrVmq_q3Tw5aB5`
 
-4. **Add a startup download script.** In `Backend/main.py`, the `load()` startup event already handles missing model files gracefully; extend it to download from `MODEL_URL` if the file isn't present:
-   ```python
-   @app.on_event("startup")
-   async def load():
-       if not os.path.exists(MODEL_PATH):
-           url = os.getenv("MODEL_URL")
-           if url:
-               import urllib.request
-               print("Downloading model from MODEL_URL ...")
-               urllib.request.urlretrieve(url, MODEL_PATH)
-       # ... rest of load logic
-   ```
+2. Deploy. Render will install dependencies, automatically pull the model weights on first start, and serve the app.
 
-5. Deploy. Render will install dependencies, download the model on first cold start, and serve the app.
-
-> Render free tier spins down after inactivity. The model download happens once per instance start (~30–60 s on first request).
+> Render free tier spins down after inactivity. The model startup may take ~30–60 s on the first request if the instance was asleep.
 
 ---
+
 
 ## Repository Structure
 
@@ -274,5 +252,3 @@ Driver_Detection/
 ├── class_pie.png
 └── README.md
 ```
-
-> `best_model.h5` is excluded from version control (see `.gitignore`). Supply it separately when running the demo.
