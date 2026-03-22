@@ -65,8 +65,9 @@ img { max-width: 100%; display: block; }
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
 }
-.nav-brand { display: flex; align-items: center; gap: .5rem; font-weight: 700; font-size: 1.1rem; }
-.nav-icon { font-size: 1.3rem; }
+.nav-brand { display: flex; align-items: center; gap: .6rem; font-weight: 900; font-size: 1.35rem; color: var(--text-1); letter-spacing: -0.02em; }
+.nav-logo { margin-top: -2px; }
+
 .nav-links { display: flex; align-items: center; gap: 1.8rem; font-size: .875rem; color: var(--text-2); }
 .nav-links a:hover { color: var(--text-1); }
 .nav-github {
@@ -469,7 +470,8 @@ img { max-width: 100%; display: block; }
 ═══════════════════════════════════════════════════════════════ */
 .footer { background: var(--bg-900); border-top: 1px solid var(--border); padding: 2rem; }
 .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-.footer-brand { font-weight: 800; font-size: 1rem; }
+.footer-brand { display: flex; align-items: center; gap: .5rem; font-weight: 800; font-size: 1.1rem; color: var(--text-1); }
+
 .footer-text  { font-size: .78rem; color: var(--text-2); }
 .footer-gh    { font-size: .82rem; color: var(--accent-1); transition: opacity .2s; }
 .footer-gh:hover { opacity: .75; }
