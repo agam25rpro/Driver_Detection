@@ -12,7 +12,13 @@ An end-to-end computer vision project to classify distracted driving behaviors u
 
 ## Live Demo
 
+🔗 **[Try the Live Web App](https://driver-detection-s10k.onrender.com/)**
+
 An interactive web demo is included in this repository. It serves the trained EfficientNetB3 model over a FastAPI backend and provides a browser UI for classifying sample dashboard images.
+
+### Application Preview
+![Demo Preview 1](demo_images/demo1.png)
+![Demo Preview 2](demo_images/demo2.png)
 
 ---
 
